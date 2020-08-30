@@ -35,13 +35,13 @@
                 <div class="col text-right">
                     <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
                         <label class="btn btn-light active" id="sortAsc">
-                            <input type="radio" name="options" autocomplete="off" checked>A-Z
+                            <input type="radio" name="options" autocomplete="off" checked>↑Ascendente
                         </label>
                         <label class="btn btn-light" id="sortDesc">
-                            <input type="radio" name="options" autocomplete="off">Z-A
+                            <input type="radio" name="options" autocomplete="off">↓Descendente
                         </label>
                         <label class="btn btn-light" id="sortByCount">
-                            <input type="radio" name="options" autocomplete="off"><i class="fas fa-sort-amount-down mr-1"></i>Cant.
+                            <input type="radio" name="options" autocomplete="off"><i class="fas fa-sort-amount-down mr-1"></i>Relevancia
                         </label>
                     </div>
                 </div>
@@ -51,13 +51,13 @@
                 <div class="col-md-6 col-sm-12 mb-1 container">
                     <div class="row container p-0 m-0">
                         <div class="col">
-                            <p class="font-weight-normal text-right my-2">Cant.</p>
+                            <p class="font-weight-normal text-right my-2">PRECIOS</p>
                         </div>
                         <div class="col">
-                            <input class="form-control" type="number" placeholder="min." id="rangeFilterCountMin">
+                            <input class="form-control" type="number" placeholder="$min." id="rangeFilterCountMin">
                         </div>
                         <div class="col">
-                            <input class="form-control" type="number" placeholder="máx." id="rangeFilterCountMax">
+                            <input class="form-control" type="number" placeholder="$máx." id="rangeFilterCountMax">
                         </div>
                         <div class="col-3 p-0">
                             <div class="btn-group" role="group">
@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="list-group" id="cat-list-container">
+                <div class="list-group" id="productos-container">
                 </div>
             </div>
         </div>
@@ -95,7 +95,7 @@
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/init.js"></script>
     <script src="js/products.js"></script>
-    <script src="js/login.js"></script>
+    <!-- <script src="js/login.js"></script> -->
 
 
 </body>

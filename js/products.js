@@ -1,35 +1,33 @@
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
-const ORDER_ASC_BY_NAME = "AZ";
-const ORDER_DESC_BY_NAME = "ZA";
-const ORDER_BY_PROD_COUNT = "Cant.";
+const ORDER_A_PRICE = "Ascendente";
+const ORDER_D_PRICE = "Descendente";
+const ORDER_RELEVANTE = "RELEVANTE";
 var currentProductsArray = [];
 var currentSortCriteria = undefined;
 var minCount = undefined;
 var maxCount = undefined;
 
+
 function sortProducts(criteria, array) {
     let result = [];
-    if (criteria === ORDER_ASC_BY_NAME) {
-        result = array.sort(function(a, b) {
-            if (a.name < b.name) { return -1; }
-            if (a.name > b.name) { return 1; }
+    if (criteria === ORDER_A_PRICE) {
+        result = array.sort(function(paramuno, paramdos) {
+            if (paramuno.cost < paramdos.cost) { return -1; }
+            if (paramuno.cost > paramdos.cost) { return 1; }
             return 0;
         });
-    } else if (criteria === ORDER_DESC_BY_NAME) {
-        result = array.sort(function(a, b) {
-            if (a.name > b.name) { return -1; }
-            if (a.name < b.name) { return 1; }
+    } else if (criteria === ORDER_D_PRICE) {
+        result = array.sort(function(paramuno, paramdos) {
+            if (paramuno.cost > paramdos.cost) { return -1; }
+            if (paramuno.cost < paramdos.cost) { return 1; }
             return 0;
         });
-    } else if (criteria === ORDER_BY_PROD_COUNT) {
-        result = array.sort(function(a, b) {
-            let aCount = parseInt(a.productCount);
-            let bCount = parseInt(b.productCount);
+    } else if (criteria === ORDER_RELEVANTE) {
+        result = array.sort(function(paramuno, paramdos) {
+            let paramunoCount = parseInt(paramuno.soldCount);
+            let paramdosCount = parseInt(paramdos.soldCount);
 
-            if (aCount > bCount) { return -1; }
-            if (aCount < bCount) { return 1; }
+            if (paramunoCount > paramdosCount) { return -1; }
+            if (paramunoCount < paramdosCount) { return 1; }
             return 0;
         });
     }
@@ -43,8 +41,8 @@ function showProductsList() {
     for (let i = 0; i < currentProductsArray.length; i++) {
         let productos = currentProductsArray[i];
 
-        if (((minCount == undefined) || (minCount != undefined && parseInt(productos.productCount) >= minCount)) &&
-            ((maxCount == undefined) || (maxCount != undefined && parseInt(productos.productCount) <= maxCount))) {
+        if (((minCount == undefined) || (minCount != undefined && parseInt(productos.cost) >= minCount)) &&
+            ((maxCount == undefined) || (maxCount != undefined && parseInt(productos.cost) <= maxCount))) {
 
             htmlContentToAppend += `
             <a href="product-info.html" class="list-group-item list-group-item-action">
@@ -55,18 +53,18 @@ function showProductsList() {
                     <div class="col">
                         <div class="d-flex w-100 justify-content-between">
                             <h4 class="mb-1">` + productos.name + `</h4>
-                            <small class="text-muted">` + productos.productCount + ` artículos</small>
+                            <small class="text-muted">` + productos.soldCount + ` artículos</small>
                         </div>
                         <p class="mb-1">` + productos.description + `</p>
                         <p class="mb-1"> U$S ` + productos.cost + `</p>
-
+                        
                     </div>
                 </div>
             </a>
             `
         }
 
-        document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
+        document.getElementById("productos-container").innerHTML = htmlContentToAppend;
     }
 }
 
@@ -82,27 +80,26 @@ function sortAndShowProducts(sortCriteria, productsArray) {
 
     showProductsList();
 }
-
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
+// //Función que se ejecuta una vez que se haya lanzado el evento de
+// //que el documento se encuentra cargado, es decir, se encuentran todos los
+// //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e) {
     getJSONData(PRODUCTS_URL).then(function(resultObj) {
         if (resultObj.status === "ok") {
-            sortAndShowProducts(ORDER_ASC_BY_NAME, resultObj.data);
+            sortAndShowProducts(ORDER_A_PRICE, resultObj.data);
         }
     });
 
     document.getElementById("sortAsc").addEventListener("click", function() {
-        sortAndShowProducts(ORDER_ASC_BY_NAME);
+        sortAndShowProducts(ORDER_A_PRICE);
     });
 
     document.getElementById("sortDesc").addEventListener("click", function() {
-        sortAndShowProducts(ORDER_DESC_BY_NAME);
+        sortAndShowProducts(ORDER_D_PRICE);
     });
 
     document.getElementById("sortByCount").addEventListener("click", function() {
-        sortAndShowProducts(ORDER_BY_PROD_COUNT);
+        sortAndShowProducts(ORDER_RELEVANTE);
     });
 
     document.getElementById("clearRangeFilter").addEventListener("click", function() {
@@ -116,8 +113,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
     });
 
     document.getElementById("rangeFilterCount").addEventListener("click", function() {
-        //Obtengo el mínimo y máximo de los intervalos para filtrar por cantidad
-        //de productos por categoría.
         minCount = document.getElementById("rangeFilterCountMin").value;
         maxCount = document.getElementById("rangeFilterCountMax").value;
 
@@ -136,13 +131,9 @@ document.addEventListener("DOMContentLoaded", function(e) {
         showProductsList();
     });
 });
+// // Pautas Individuales
 
+// // Con el listado de productos desplegados:
 
-
-
-
-
-
-// datos de JSon 
-// name, description, cost, currency, imgSrc, soldCount.
-// debe de mostrar precio, nombre, y breve descripción
+// // Aplicar filtros a partir de rango de precio definido.
+// //  Agregar las funcionalidades de orden ascendente y descendente en función del precio y descendente en función de la relevancia.

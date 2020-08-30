@@ -43,8 +43,13 @@ if (!window.location.href.endsWith("login.html") &&
     sessionStorage.getItem("logged") !== "true") {
     window.location.href = "login.html"
 }
+document.getElementById("usersave").innerHTML = localStorage.getItem("Usuario");
+// document.getElementById("usersave").innerHTML = sessionStorage.getItem("Usuario");
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e) {});
+
+// user de sessionStorage o localStorage enviarlo al link de index.html <a(...)>
+// para utilizar de almacenamiento en el sessionStorage remplazamos la línea 47 por 46
